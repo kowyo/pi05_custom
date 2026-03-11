@@ -1,16 +1,19 @@
 [project]
-name = "starter"
+name = "pi05_custom"
 version = "0.1.0"
-description = "Add your description here"
+description = "Custom pi0.5 policy for LeRobot"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "lerobot[pi]>=0.5.0",
+]
 
 [dependency-groups]
 dev = [
     "commitizen>=4.13.9",
     "prek>=0.3.5",
     "ruff>=0.15.5",
+    "ty>=0.0.21",
 ]
 
 [tool.ruff.lint]
