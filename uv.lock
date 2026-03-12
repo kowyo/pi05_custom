@@ -733,6 +733,7 @@ name = "lerobot-policy-pi05-custom"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "accelerate" },
     { name = "lerobot", extra = ["pi"] },
 ]
 
@@ -745,7 +746,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "lerobot", extras = ["pi"], specifier = ">=0.5.0" }]
+requires-dist = [
+    { name = "accelerate", specifier = ">=1.13.0" },
+    { name = "lerobot", extras = ["pi"], specifier = ">=0.5.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
