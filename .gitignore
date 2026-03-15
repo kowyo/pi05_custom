@@ -11,3 +11,4 @@ wheels/
 
 # Artifacts
 outputs/
+*.log
