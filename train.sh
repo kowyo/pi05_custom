@@ -1,6 +1,8 @@
 #!/bin/bash
 export PYTORCH_ALLOC_CONF=expandable_segments:True
+export CUDA_VISIBLE_DEVICES=0,3,6,7
 rm -rf outputs/pi05_training
+rm -f train_*.log
 
 LOG_FILE="train_$(date +%Y%m%d_%H%M%S).log"
 echo "Logging to $LOG_FILE"
@@ -10,8 +12,8 @@ source .venv/bin/activate
 uv run accelerate launch \
     --multi_gpu \
     --num_processes=4 \
+    --num_machines=1 \
     --mixed_precision=bf16 \
-    --dynamo_backend=inductor \
     $(which lerobot-train) \
     --dataset.repo_id=kowyo/plugin \
     --dataset.revision=main \
@@ -27,7 +29,7 @@ uv run accelerate launch \
     --policy.train_expert_only=true \
     --steps=20000 \
     --policy.device=cuda \
-    --batch_size=32 \
+    --batch_size=16 \
     --policy.push_to_hub=true \
     --policy.repo_id=kowyo/pi05-custom \
     2>&1 | tee "$LOG_FILE"
