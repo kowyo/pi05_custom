@@ -1,6 +1,5 @@
 #!/bin/bash
-export PYTORCH_ALLOC_CONF=expandable_segments:True
-export CUDA_VISIBLE_DEVICES=0,3,6,7
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 rm -rf outputs/pi05_training
 rm -f train_*.log
 
@@ -15,7 +14,7 @@ uv run accelerate launch \
     --num_machines=1 \
     --mixed_precision=bf16 \
     $(which lerobot-train) \
-    --dataset.repo_id=kowyo/plugin \
+    --dataset.repo_id=kowyo/plugin-v2 \
     --dataset.revision=main \
     --policy.type=pi05_custom \
     --output_dir=./outputs/pi05_training \
@@ -28,8 +27,9 @@ uv run accelerate launch \
     --policy.freeze_vision_encoder=false \
     --policy.train_expert_only=true \
     --steps=20000 \
+    --log_freq=20 \
     --policy.device=cuda \
-    --batch_size=16 \
+    --batch_size=24 \
     --policy.push_to_hub=true \
-    --policy.repo_id=kowyo/pi05-custom \
+    --policy.repo_id=kowyo/pi05_custom_v2 \
     2>&1 | tee "$LOG_FILE"
