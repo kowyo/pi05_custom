@@ -2,6 +2,7 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 MODEL_ID="pi05_custom_v3"
 OUTPUT_DIR="outputs/$MODEL_ID"
+DATASET_ID="kowyo/pick-and-place"
 
 rm -rf $OUTPUT_DIR
 rm -f train_*.log
@@ -16,7 +17,7 @@ uv run accelerate launch \
     --num_machines=1 \
     --mixed_precision=bf16 \
     $(which lerobot-train) \
-    --dataset.repo_id=kowyo/pick-and-place \
+    --dataset.repo_id=$DATASET_ID \
     --dataset.revision=main \
     --policy.type=pi05_custom \
     --output_dir=./$OUTPUT_DIR \
