@@ -1,8 +1,10 @@
 #!/bin/bash
 export CUDA_VISIBLE_DEVICES=0,1,2,3
-rm -rf outputs/pi05_training
-rm -f train_*.log
+MODEL_ID="pi05_custom_v3"
+OUTPUT_DIR="outputs/$MODEL_ID"
 
+rm -rf $OUTPUT_DIR
+rm -f train_*.log
 LOG_FILE="train_$(date +%Y%m%d_%H%M%S).log"
 echo "Logging to $LOG_FILE"
 
@@ -14,10 +16,10 @@ uv run accelerate launch \
     --num_machines=1 \
     --mixed_precision=bf16 \
     $(which lerobot-train) \
-    --dataset.repo_id=kowyo/plugin-v2 \
+    --dataset.repo_id=kowyo/pick-and-place \
     --dataset.revision=main \
     --policy.type=pi05_custom \
-    --output_dir=./outputs/pi05_training \
+    --output_dir=./$OUTPUT_DIR \
     --job_name=pi05_training \
     --policy.pretrained_path=lerobot/pi05_base \
     --policy.compile_model=true \
@@ -31,5 +33,5 @@ uv run accelerate launch \
     --policy.device=cuda \
     --batch_size=24 \
     --policy.push_to_hub=true \
-    --policy.repo_id=kowyo/pi05_custom_v2 \
+    --policy.repo_id=kowyo/$MODEL_ID \
     2>&1 | tee "$LOG_FILE"
