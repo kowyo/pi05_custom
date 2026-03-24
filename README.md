@@ -1,34 +1,17 @@
-# uv devcontainer template
+# pi05_custom
 
-This project is a minimal Python template built for development with `uv` and VS Code Dev Containers.
+A custom [pi0.5](https://www.physicalintelligence.company/blog/pi05) policy for [LeRobot](https://github.com/huggingface/lerobot).
 
-## What this project includes
+The policy uses a PaliGemma VLM backbone with a separate action expert, and predicts actions via flow matching.
 
-- Python package application layout
-- Dependency management with `uv`
-- Development container configuration in `.devcontainer/`
-- Code formatting and linting with `ruff`
-- Git hooks with `prek`
-- Commit message validation with `commitizen`
-
-## Project structure
-
-```text
-.
-├── .devcontainer/      # Dev Container configuration
-├── Makefile            # Common development commands
-├── prek.toml           # Git hook configuration
-├── pyproject.toml      # Project metadata and tooling config
-├── src/
-│   └── starter/        # Example Python package
-└── uv.lock             # Locked dependency versions
-```
-
-## Available commands
+## Setup
 
 ```bash
-make prepare  # install dependencies and Git hooks
-make format   # format code with ruff
-make lint     # lint and auto-fix code with ruff
-make check    # run format and lint
+make prepare   # install dependencies and Git hooks
+```
+
+## Training
+
+```bash
+bash train.sh
 ```
